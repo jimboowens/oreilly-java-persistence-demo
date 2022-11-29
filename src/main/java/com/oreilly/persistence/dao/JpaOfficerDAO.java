@@ -12,7 +12,9 @@ import java.util.Optional;
 //import java.util.logging.Logger;
 
 import com.oreilly.persistence.config.JpaQueries;
-
+/**
+ * Spring manages transactions, hibernate manages persistence.
+ */
 @SuppressWarnings("JpaQlInspection")
 @Repository
 public class JpaOfficerDAO implements OfficerDAO<OfficerEntity> {
@@ -51,7 +53,6 @@ public class JpaOfficerDAO implements OfficerDAO<OfficerEntity> {
     @Override
     public boolean existsById(Integer id) {
         Object result = em.createQuery(queries.getExistsById()).setParameter("id", id).getSingleResult();
-
         return !Objects.isNull(result);
     }
 }

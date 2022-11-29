@@ -2,7 +2,6 @@ package com.oreilly.persistence.dao;
 
 import com.oreilly.persistence.config.JpaQueries;
 import com.oreilly.persistence.config.SqlQueries;
-import com.oreilly.persistence.entities.Officer;
 import com.oreilly.persistence.entities.OfficerEntity;
 import com.oreilly.persistence.entities.Rank;
 import org.junit.jupiter.api.Test;
