@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -31,16 +32,19 @@ public class JpaOfficerDAO implements OfficerDAO<OfficerEntity> {
     }
 
     @Override
+    @Transactional(readOnly=true)
     public Optional<OfficerEntity> findById(Integer id) {
         return Optional.ofNullable(em.find(OfficerEntity.class, id));
     }
 
     @Override
+    @Transactional(readOnly=true)
     public List<OfficerEntity> findAll() {
         return em.createQuery(queries.getFindAllOfficers(), OfficerEntity.class).getResultList();
     }
 
     @Override
+    @Transactional(readOnly=true)
     public long count() {
         return em.createQuery(queries.getGetOfficerCount(), Long.class).getSingleResult();
     }
@@ -51,6 +55,7 @@ public class JpaOfficerDAO implements OfficerDAO<OfficerEntity> {
     }
 
     @Override
+    @Transactional(readOnly=true)
     public boolean existsById(Integer id) {
         Object result = em.createQuery(queries.getExistsById()).setParameter("id", id).getSingleResult();
         return !Objects.isNull(result);

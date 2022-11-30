@@ -19,14 +19,21 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.logging.Logger;
+
 @SpringBootTest
 @Transactional
-public class JPAOfficerDaoTest {
+public class OfficerRepositoryTest {
+    // autoconfigured OfficerRepository makes integrating with this table much more simple.
+    // It virtually replaces the entire JPAOfficerDAO.
     @Autowired
-    private JpaOfficerDAO dao;
+    private OfficerRepository dao;
 
     @Autowired
     private JdbcTemplate template;
+
+    @Autowired
+    Logger log;
 
     @Autowired
     SqlQueries sqlQueries;
@@ -38,6 +45,12 @@ public class JPAOfficerDaoTest {
 
     private List<Integer> getIds() {
         return template.query(sqlQueries.getGetOfficerIds(), idRowMapper);
+    }
+
+    @Test
+    public void findAllByRankAndLastNameContaining() {
+        List<OfficerEntity> officers = dao.findAllByRankAndLastNameContaining(Rank.CAPTAIN, "i");
+        officers.forEach(officer->log.info("officer: [" + officer + "]"));
     }
 
     @Test
